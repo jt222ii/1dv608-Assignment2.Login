@@ -5,25 +5,29 @@ class LoginController {
 	private $Uname;
 	private $Pword;
 	private $LoginView;
+	private $LoginModel;
 
-	public function __construct(LoginView $LoginView){
+	public function __construct(LoginView $LoginView, LoginModel $LoginModel){
 		$this->LoginView = $LoginView;
+		$this->LoginModel = $LoginModel;
 	}
 
 	public function userPost(){
 		if($this->LoginView->hasUserPosted()){
-			echo "Användaren postade (LoginController line 15)";
-			$this->getUname();
-			$this->getPword();
+			//echo "Användaren postade (LoginController line 15)";
+			$this->setUname();
+			$this->setPword();
+			var_dump($this->Uname);
+			$this->LoginModel->attemptLogin($this->Uname, $this->Pword);
 		}	
 	}
 
-	public function getUname(){
-		$this->LoginView->getInputUname();
+	public function setUname(){
+		$this->Uname = $this->LoginView->getInputUname();
 	}
 
-	public function getPword(){
-		$this->LoginView->getInputPword();
+	public function setPword(){
+		$this->Pword = $this->LoginView->getInputPword();
 	}
 
 
