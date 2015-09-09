@@ -17,7 +17,6 @@ class LoginController {
 			//echo "Användaren postade (LoginController line 15)";
 			$this->setUname();
 			$this->setPword();
-			var_dump($this->Uname);
 			$this->LoginModel->attemptLogin($this->Uname, $this->Pword);
 		}	
 	}

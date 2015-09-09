@@ -7,20 +7,46 @@ class LoginModel {
 	private $unameInput;
 	private $pwordInput;
 
-	public function __construct(){
-
-	}
+	private $message;
+	private $logInStatus;
 
 	public function attemptLogin($Uname, $Pword){
-		$this->unameInput = $Uname;
-		$this->pwordInput = $Pword;
+		$this->logInStatus = false;
+		$this->unameInput = trim($Uname);
+		$this->pwordInput = trim($Pword);
 
-		if($this->unameInput == null && $this->pwordInput == null)
+		if($this->unameInput === '' && $this->pwordInput === '')
 		{
-			echo "tomma fält noob";
+			$this->message = "Username is missing";
+		}	
+		else if($this->unameInput !== '' && $this->pwordInput === '')
+		{
+			$this->message = "Password is missing";
 		}
-		echo "test";
-
+		else if($this->unameInput === '' && $this->pwordInput !== '')
+		{
+			$this->message = "Username is missing";
+		}
+		else if($this->unameInput === self::$correctUname && $this->pwordInput !== self::$correctPword)
+		{
+			$this->message = "Wrong name or password";
+		}
+		else if($this->unameInput !== self::$correctUname && $this->pwordInput === self::$correctPword)
+		{
+			$this->message = "Wrong name or password";
+		}
+		else if($this->unameInput === self::$correctUname && $this->pwordInput === self::$correctPword)
+		{
+			$this->message = "Welcome";
+			$this->logInStatus = true;
+		}
 	}
 	
+	public function getMessage(){
+		return $this->message;
+	}
+	public function getLoginStatus(){
+		return $this->logInStatus;
+	}
+
 }
