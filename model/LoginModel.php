@@ -17,27 +17,27 @@ class LoginModel {
 
 		if($this->unameInput === '' && $this->pwordInput === '')
 		{
-			$this->message = "Username is missing";
+			$this->message = 'Username is missing';
 		}	
 		else if($this->unameInput !== '' && $this->pwordInput === '')
 		{
-			$this->message = "Password is missing";
+			$this->message = 'Password is missing';
 		}
 		else if($this->unameInput === '' && $this->pwordInput !== '')
 		{
-			$this->message = "Username is missing";
+			$this->message = 'Username is missing';
 		}
 		else if($this->unameInput === self::$correctUname && $this->pwordInput !== self::$correctPword)
 		{
-			$this->message = "Wrong name or password";
+			$this->message = 'Wrong name or password';
 		}
 		else if($this->unameInput !== self::$correctUname && $this->pwordInput === self::$correctPword)
 		{
-			$this->message = "Wrong name or password";
+			$this->message = 'Wrong name or password';
 		}
 		else if($this->unameInput === self::$correctUname && $this->pwordInput === self::$correctPword)
 		{
-			$this->message = "Welcome";
+			$this->message = 'Welcome';
 			$this->logInStatus = true;
 		}
 	}

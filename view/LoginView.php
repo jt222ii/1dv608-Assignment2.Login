@@ -38,6 +38,7 @@ class LoginView {
 	 */
 	public function response() {
 		$response = '';
+		
 		$message = $this->loginModel->getMessage();
 		
 		if(!$this->loginModel->getLoginStatus())
