@@ -12,6 +12,23 @@ class LoginView {
 
 	
 
+	public function hasUserPosted(){
+		if(isset($_POST[self::$name]) || isset($_POST[self::$password]))
+		{
+			return true;
+		}
+	}
+	public function getInputUname(){
+		echo  $_POST[self::$name];
+		return $_POST[self::$name];
+	}
+	public function getInputPword(){
+		echo  $_POST[self::$password];
+		return $_POST[self::$password];
+	}
+
+
+
 	/**
 	 * Create HTTP response
 	 *
@@ -72,5 +89,10 @@ class LoginView {
 	private function getRequestUserName() {
 		//RETURN REQUEST VARIABLE: USERNAME
 	}
+
+
+
+
+
 	
 }
