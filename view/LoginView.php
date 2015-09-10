@@ -17,7 +17,7 @@ class LoginView {
 	}
 
 	public function hasUserPosted(){
-		if(isset($_POST[self::$name]) || isset($_POST[self::$password]))
+		if(isset($_POST[self::$login]))
 		{
 			return true;
 		}
@@ -37,8 +37,9 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$response = '';
-		
+		$response = "";
+		$message = "";
+
 		$message = $this->loginModel->getMessage();
 		
 		if(!$this->loginModel->getLoginStatus())

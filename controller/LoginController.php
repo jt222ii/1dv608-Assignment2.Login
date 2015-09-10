@@ -14,20 +14,8 @@ class LoginController {
 
 	public function userPost(){
 		if($this->LoginView->hasUserPosted()){
-			//echo "Användaren postade (LoginController line 15)";
-			$this->setUname();
-			$this->setPword();
-			$this->LoginModel->attemptLogin($this->Uname, $this->Pword);
+			//hämtar input och försöker logga in
+			$this->LoginModel->attemptLogin($this->LoginView->getInputUname(), $this->LoginView->getInputPword());
 		}	
 	}
-
-	public function setUname(){
-		$this->Uname = $this->LoginView->getInputUname();
-	}
-
-	public function setPword(){
-		$this->Pword = $this->LoginView->getInputPword();
-	}
-
-
 }

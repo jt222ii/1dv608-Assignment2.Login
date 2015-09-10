@@ -3,7 +3,7 @@
 class LoginModel {
 
 	private static $correctUname = 'Admin';
-	private static $correctPword = 'password';
+	private static $correctPword = 'Password';
 	private $unameInput;
 	private $pwordInput;
 
@@ -15,7 +15,7 @@ class LoginModel {
 		$this->unameInput = trim($Uname);
 		$this->pwordInput = trim($Pword);
 
-		if($this->unameInput === '' && $this->pwordInput === '')
+		if($this->unameInput === '')
 		{
 			$this->message = 'Username is missing';
 		}	
@@ -23,15 +23,7 @@ class LoginModel {
 		{
 			$this->message = 'Password is missing';
 		}
-		else if($this->unameInput === '' && $this->pwordInput !== '')
-		{
-			$this->message = 'Username is missing';
-		}
-		else if($this->unameInput === self::$correctUname && $this->pwordInput !== self::$correctPword)
-		{
-			$this->message = 'Wrong name or password';
-		}
-		else if($this->unameInput !== self::$correctUname && $this->pwordInput === self::$correctPword)
+		else if($this->unameInput !== self::$correctUname || $this->pwordInput !== self::$correctPword)
 		{
 			$this->message = 'Wrong name or password';
 		}
