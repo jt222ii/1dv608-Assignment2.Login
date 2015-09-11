@@ -10,6 +10,8 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
+	private static $keepName = '';
+
 	private $LoginModel;
 
 	public function __construct(LoginModel $loginModel){
@@ -22,8 +24,18 @@ class LoginView {
 			return true;
 		}
 	}
+
+	public function userLogout(){
+		if(isset($_POST[self::$logout]))
+		{
+			return true;
+		}
+	}
 	public function getInputUname(){
-		return $_POST[self::$name];
+		if(isset($_POST[self::$name]))
+		{
+			return $_POST[self::$name];
+		}
 	}
 	public function getInputPword(){
 		return $_POST[self::$password];
@@ -41,14 +53,15 @@ class LoginView {
 		$message = "";
 
 		$message = $this->loginModel->getMessage();
-		
-		if(!$this->loginModel->getLoginStatus())
+
+		if($this->loginModel->getLoginStatus())
 		{
-			$response = $this->generateLoginFormHTML($message);
+			$response = $this->generateLogoutButtonHTML($message);
 		}
 		else
 		{
-			$response .= $this->generateLogoutButtonHTML($message);
+			self::$keepName = $this->getInputUname();
+			$response .= $this->generateLoginFormHTML($message);
 		}
 		return $response;
 	}
@@ -80,7 +93,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . self::$keepName .'" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />

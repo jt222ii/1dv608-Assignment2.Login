@@ -32,6 +32,10 @@ class LoginModel {
 			$this->message = 'Welcome';
 			$this->logInStatus = true;
 		}
+		return false;
+	}
+	public function logoutMessage(){
+		$this->message = 'Bye bye!';
 	}
 	
 	public function getMessage(){
