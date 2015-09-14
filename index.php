@@ -25,5 +25,5 @@ $lc = new LoginController($v, $lm);
 $lc->userPost();
 
 
-$lv->render($lm->getLoginStatus(), $v, $dtv);
+$lv->render($lm->isUserLoggedIn(), $v, $dtv);
 

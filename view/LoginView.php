@@ -15,7 +15,7 @@ class LoginView {
 	private $LoginModel;
 
 	public function __construct(LoginModel $loginModel){
-		$this->loginModel = $loginModel;
+		$this->LoginModel = $loginModel;
 	}
 
 	public function hasUserPosted(){
@@ -52,9 +52,9 @@ class LoginView {
 		$response = "";
 		$message = "";
 
-		$message = $this->loginModel->getMessage();
-
-		if($this->loginModel->getLoginStatus())
+		$message = $this->LoginModel->getMessage();
+		
+		if($this->LoginModel->isUserLoggedIn())
 		{
 			$response = $this->generateLogoutButtonHTML($message);
 		}
