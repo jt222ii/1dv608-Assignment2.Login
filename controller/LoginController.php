@@ -19,7 +19,7 @@ class LoginController {
 		}	
 		else if ($this->LoginView->userLogout())
 		{
-			$this->LoginModel->logoutMessage();
+			$this->LoginModel->logout();
 		}
 	}
 }

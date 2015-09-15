@@ -11,11 +11,16 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 
 	private static $keepName = '';
+	private $message;
 
 	private $LoginModel;
 
 	public function __construct(LoginModel $loginModel){
 		$this->LoginModel = $loginModel;
+		if(!isset($_SESSION['messageBool']))
+		{
+			$_SESSION['messageBool'] = true;
+		}
 	}
 
 	public function hasUserPosted(){
@@ -38,7 +43,39 @@ class LoginView {
 		}
 	}
 	public function getInputPword(){
-		return $_POST[self::$password];
+		if(isset($_POST[self::$password]))
+		{
+			return $_POST[self::$password];
+		}
+	}
+	public function setMessage(){
+		$this->message = '';
+		if($this->hasUserPosted())
+		{
+			if($this->getInputUname() == '')
+			{
+				$this->message = 'Username is missing';
+			}	
+			else if($this->getInputUname() != '' && $this->getInputPword() == '')
+			{
+				$this->message = 'Password is missing';
+			}
+			else if(!$this->LoginModel->isUserLoggedIn())
+			{
+				$this->message = 'Wrong name or password';
+			}
+			else if($this->LoginModel->isUserLoggedIn() && $_SESSION['messageBool'])
+			{
+				$_SESSION['messageBool'] = false;
+				$this->message = 'Welcome';
+			}
+		}
+		else if ($this->userLogout() && !$_SESSION['messageBool'])
+		{
+			$_SESSION['messageBool'] = true;
+			$this->message = 'Bye bye!';
+			session_destroy();
+		}
 	}
 
 	/**
@@ -50,18 +87,16 @@ class LoginView {
 	 */
 	public function response() {
 		$response = "";
-		$message = "";
+		$this->setMessage();
 
-		$message = $this->LoginModel->getMessage();
-		
 		if($this->LoginModel->isUserLoggedIn())
 		{
-			$response = $this->generateLogoutButtonHTML($message);
+			$response = $this->generateLogoutButtonHTML($this->message);
 		}
 		else
 		{
 			self::$keepName = $this->getInputUname();
-			$response .= $this->generateLoginFormHTML($message);
+			$response .= $this->generateLoginFormHTML($this->message);
 		}
 		return $response;
 	}
