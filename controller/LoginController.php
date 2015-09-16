@@ -18,7 +18,7 @@ class LoginController {
 			//hämtar input och försöker logga in
 			try{
 				$this->LoginModel->attemptLogin($this->LoginView->getInputUname(), $this->LoginView->getInputPword());	
-				$this->LoginView->setMessage('Welcome');
+				$this->LoginView->setWelcomeMessage();
 			}
 			catch(Exception $e){
 				$this->LoginView->setMessage($e->getMessage());
@@ -28,7 +28,7 @@ class LoginController {
 		{
 			try{
 				$this->LoginModel->logout();	
-				$this->LoginView->setMessage('Bye bye!');
+				$this->LoginView->setLogoutMessage();
 			}
 			catch(Exception $e){
 				$this->LoginView->setMessage($e->getMessage());

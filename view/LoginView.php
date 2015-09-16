@@ -11,9 +11,18 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 
 	private static $keepName = '';
+	private static $welcomeMessage = "Welcome";
+	private static $logoutMessage = "Bye bye!";
+	
 	private $message;
-
 	private $LoginModel;
+
+	public function setWelcomeMessage(){
+		$this->setMessage(self::$welcomeMessage);
+	}
+	public function setLogoutMessage(){
+		$this->setMessage(self::$logoutMessage);
+	}
 
 	public function __construct(LoginModel $loginModel){
 		$this->LoginModel = $loginModel;	
