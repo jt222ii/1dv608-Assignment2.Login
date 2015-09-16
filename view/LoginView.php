@@ -11,7 +11,7 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 
 	private static $keepName = '';
-	private $message = 'Welcome';
+	private $message;
 
 	private $LoginModel;
 
