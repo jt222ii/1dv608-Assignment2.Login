@@ -16,23 +16,11 @@ class LoginController {
 	public function userPost(){
 		if($this->LoginView->hasUserPosted()){
 			//hämtar input och försöker logga in
-			try{
-				$this->LoginModel->attemptLogin($this->LoginView->getInputUname(), $this->LoginView->getInputPword());	
-				$this->LoginView->setWelcomeMessage();
-			}
-			catch(Exception $e){
-				$this->LoginView->setMessage($e->getMessage());
-			}
+			$this->LoginModel->attemptLogin($this->LoginView->getInputUname(), $this->LoginView->getInputPword());
 		}	
 		else if ($this->LoginView->userLogout())
 		{
-			try{
 				$this->LoginModel->logout();	
-				$this->LoginView->setLogoutMessage();
-			}
-			catch(Exception $e){
-				$this->LoginView->setMessage($e->getMessage());
-			}
 		}
 	}
 }
