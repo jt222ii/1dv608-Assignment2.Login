@@ -10,6 +10,10 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
+	private static $goToRegister = 'LoginView::goToRegister';
+	private static $register = 'LoginView::Register';
+	private static $regRepeatPassword = 'LoginView::RegisterRepeatPassword';
+
 	private static $keepName = '';
 	
 	private $message;
@@ -25,16 +29,23 @@ class LoginView {
 		}	
 	}
 
-	public function hasUserPosted(){
+	public function hasUserTriedToLogin(){
 		if(isset($_POST[self::$login]))
 		{
 			return true;
 		}
 	}
 
+	public function hasUserTriedToRegister(){
+	if(isset($_POST[self::$register]))
+	{
+		return true;
+	}
+	}
+
 	public function setMessage(){
 		$this->message = '';
-		if($this->hasUserPosted())
+		if($this->hasUserTriedToLogin())
 		{
 			if($this->getInputUname() == '')
 			{
@@ -52,6 +63,23 @@ class LoginView {
 			{
 				$_SESSION['messageBool'] = false;
 				$this->message = 'Welcome';
+			}
+		}
+		
+		if($this->hasUserTriedToRegister())
+		{
+			$this->message = "";
+			if(mb_strlen($this->getInputUname())<3)
+			{
+				$this->message .= 'Username has too few characters, at least 3 characters.</br>';
+			}	
+			if(mb_strlen($this->getInputPword())<6)
+			{
+				$this->message .= 'Password has too few characters, at least 6 characters.</br>';
+			}	
+			if($this->getInputPword() != $this->getInputRepeatPword())
+			{
+				$this->message .= 'Passwords do not match.</br>';
 			}
 		}
 		else if ($this->userLogout() && !$_SESSION['messageBool'])
@@ -80,6 +108,12 @@ class LoginView {
 			return $_POST[self::$password];
 		}
 	}
+	public function getInputRepeatPword(){
+		if(isset($_POST[self::$regRepeatPassword]))
+		{
+			return $_POST[self::$regRepeatPassword];
+		}
+	}
 	/**
 	 * Create HTTP response
 	 *
@@ -90,15 +124,22 @@ class LoginView {
 	public function response() {
 		$response = "";
 		$this->setMessage();
-		if($this->LoginModel->isUserLoggedIn())
+		$response .= $this->generateRegisterButtonHTML();
+		if(isset($_POST[self::$goToRegister])  || isset($_POST[self::$register]) )
 		{
-			$response = $this->generateLogoutButtonHTML($this->message);
+			$response = $this->generateRegisterFormHTML($this->message);
+		}
+		else if($this->LoginModel->isUserLoggedIn())
+		{
+			$response .= $this->generateLogoutButtonHTML($this->message);
 		}
 		else
 		{
 			self::$keepName = $this->getInputUname();
 			$response .= $this->generateLoginFormHTML($this->message);
 		}
+
+
 		return $response;
 	}
 
@@ -114,6 +155,14 @@ class LoginView {
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
 		';
+	}
+
+	private function generateRegisterButtonHTML() {
+	return '
+		<form  method="post" >
+			<input type="submit" name="' . self::$goToRegister . '" value="Register NOW!"/>
+		</form>
+	';
 	}
 	
 	/**
@@ -148,7 +197,27 @@ class LoginView {
 		//RETURN REQUEST VARIABLE: USERNAME
 	}
 
+	private function generateRegisterFormHTML($message) {
+		return '
+			<form method="post" > 
+				<fieldset>
+					<p id="' . self::$messageId . '">' . $message .'</p>
+					<legend>Register - enter Username and password</legend>
+					
+					<label for="' . self::$name . '">Username :</label>
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" /></br>
 
+					<label for="' . self::$password . '">Password :</label>
+					<input type="password" id="' . self::$password . '" name="' . self::$password . '" /></br>
+
+					<label for="' . self::$regRepeatPassword . '">Repeat Password :</label>
+					<input type="password" id="' . self::$regRepeatPassword . '" name="' . self::$regRepeatPassword . '" /></br>
+					
+					<input type="submit" name="' . self::$register . '" value="register" />
+				</fieldset>
+			</form>
+		';
+	}
 
 
 

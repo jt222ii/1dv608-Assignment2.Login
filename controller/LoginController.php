@@ -14,7 +14,7 @@ class LoginController {
 	}
 
 	public function userPost(){
-		if($this->LoginView->hasUserPosted()){
+		if($this->LoginView->hasUserTriedToLogin()){
 			//hämtar input och försöker logga in
 			$this->LoginModel->attemptLogin($this->LoginView->getInputUname(), $this->LoginView->getInputPword());
 		}	
