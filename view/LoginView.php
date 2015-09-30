@@ -10,7 +10,6 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	private static $goToRegister = 'LoginView::goToRegister';
 	private static $register = 'LoginView::Register';
 	private static $regRepeatPassword = 'LoginView::RegisterRepeatPassword';
 
@@ -37,10 +36,10 @@ class LoginView {
 	}
 
 	public function hasUserTriedToRegister(){
-	if(isset($_POST[self::$register]))
-	{
-		return true;
-	}
+		if(isset($_POST[self::$register]))
+		{
+			return true;
+		}
 	}
 
 	public function setMessage(){
@@ -124,8 +123,7 @@ class LoginView {
 	public function response() {
 		$response = "";
 		$this->setMessage();
-		$response .= $this->generateRegisterButtonHTML();
-		if(isset($_POST[self::$goToRegister])  || isset($_POST[self::$register]) )
+		if(isset($_GET['register']) )
 		{
 			$response = $this->generateRegisterFormHTML($this->message);
 		}
@@ -157,12 +155,13 @@ class LoginView {
 		';
 	}
 
-	private function generateRegisterButtonHTML() {
-	return '
-		<form  method="post" >
-			<input type="submit" name="' . self::$goToRegister . '" value="Register NOW!"/>
-		</form>
-	';
+	private function generateRegisterLinkHTML() {
+		if(isset($_GET['register']))
+		{
+			return '<a href=?>GO BACK!</a>';
+		}
+		else
+		return '<a href=?register>REGISTER NOW!</a>';
 	}
 	
 	/**
@@ -174,6 +173,7 @@ class LoginView {
 		return '
 			<form method="post" > 
 				<fieldset>
+					<p>'.$this->generateRegisterLinkHTML().'</p>
 					<legend>Login - enter Username and password</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
@@ -201,6 +201,7 @@ class LoginView {
 		return '
 			<form method="post" > 
 				<fieldset>
+					<p>'.$this->generateRegisterLinkHTML().'</p>
 					<p id="' . self::$messageId . '">' . $message .'</p>
 					<legend>Register - enter Username and password</legend>
 					
