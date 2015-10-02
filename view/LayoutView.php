@@ -2,7 +2,6 @@
 
 
 class LayoutView {
-  
   public function render($isLoggedIn, $view, DateTimeView $dtv) {
     echo '<!DOCTYPE html>
       <html>
@@ -15,7 +14,7 @@ class LayoutView {
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
           
           <div class="container">
-              ' . $this->generateRegisterLinkHTML() . '
+              ' . $this->generateRegisterLinkHTML($isLoggedIn) . '
               ' . $view->response() . '    
               ' . $dtv->show() . '
           </div>
@@ -33,12 +32,15 @@ class LayoutView {
     }
   }
 
-  private function generateRegisterLinkHTML() {
-    if(isset($_GET['register']))
+  private function generateRegisterLinkHTML($isLoggedIn) {
+    if(!$isLoggedIn)
     {
-      return '<a href=?>GO BACK!</a>';
+      if(isset($_GET['register']))
+      {
+        return '<a href=?>GO BACK!</a>';
+      }
+      else
+      return '<a href=?register>REGISTER NOW!</a>';
     }
-    else
-    return '<a href=?register>REGISTER NOW!</a>';
   }
 }
