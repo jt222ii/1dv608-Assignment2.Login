@@ -1,44 +1,40 @@
 <?php
 session_start();
-//INCLUDE THE FILES NEEDED...
-require_once('view/LoginView.php');
-require_once('view/DateTimeView.php');
-require_once('view/LayoutView.php');
-require_once('controller/LoginController.php');
-require_once('model/LoginModel.php');
+require_once('controller/MasterController.php');
 
-//MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
-/*error_reporting(E_ALL);
-ini_set('display_errors', 'On');*/
+$mc = new MasterController();
+$mc->startApp();
+// //INCLUDE THE FILES NEEDED...
+// require_once('view/LoginView.php');
+// require_once('view/DateTimeView.php');
+// require_once('view/LayoutView.php');
+// require_once('controller/LoginController.php');
+// require_once('model/LoginModel.php');
+// require_once('model/RegisterModel.php');
+// require_once('model/userDAL.php');
 
-//CREATE OBJECTS OF THE VIEWS
-// phpinfo();
-$mysql_host = "localhost";
-$mysql_user = "jt222ii";
-$mysql_password = "jt222ii";
-$mysql_database = "member";
+// //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
+// error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
 
-// Create connection
-$conn = mysqli_connect($mysql_host, $mysql_user, $mysql_password, $mysql_database);
+// //CREATE OBJECTS OF THE VIEWS
 
-// Check connection
-if ($conn->connect_error) {
-   die("Connection failed: " . $conn->connect_error);
-} 
-echo "Connected successfully";
-mysqli_close($conn);
+// // phpinfo();
+// $ud = new userDAL();
+// $rm = new RegisterModel($ud);
+// $rm->addUserToDatabase("annatlosen", "Pitt");
 
-$dtv = new DateTimeView();
-$lv = new LayoutView();
+// $dtv = new DateTimeView();
+// $lv = new LayoutView();
 
-$lm = new LoginModel();
-$v = new LoginView($lm);
+// $lm = new LoginModel();
+// $v = new LoginView($lm);
 
-$lc = new LoginController($v, $lm);
+// $lc = new LoginController($v, $lm);
 
 
-$lc->userPost();
+// $lc->userPost();
 
 
-$lv->render($lm->isUserLoggedIn(), $v, $dtv);
+// $lv->render($lm->isUserLoggedIn(), $v, $dtv);
 

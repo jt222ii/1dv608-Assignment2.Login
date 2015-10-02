@@ -10,11 +10,7 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	private static $register = 'LoginView::Register';
-	private static $regRepeatPassword = 'LoginView::RegisterRepeatPassword';
-
 	private static $keepName = '';
-	
 	private $message;
 	private $LoginModel;
 
@@ -64,23 +60,7 @@ class LoginView {
 				$this->message = 'Welcome';
 			}
 		}
-		
-		if($this->hasUserTriedToRegister())
-		{
-			$this->message = "";
-			if(mb_strlen($this->getInputUname())<3)
-			{
-				$this->message .= 'Username has too few characters, at least 3 characters.</br>';
-			}	
-			if(mb_strlen($this->getInputPword())<6)
-			{
-				$this->message .= 'Password has too few characters, at least 6 characters.</br>';
-			}	
-			if($this->getInputPword() != $this->getInputRepeatPword())
-			{
-				$this->message .= 'Passwords do not match.</br>';
-			}
-		}
+
 		else if ($this->userLogout() && !$_SESSION['messageBool'])
 		{
 			$_SESSION['messageBool'] = true;
@@ -136,8 +116,6 @@ class LoginView {
 			self::$keepName = $this->getInputUname();
 			$response .= $this->generateLoginFormHTML($this->message);
 		}
-
-
 		return $response;
 	}
 
@@ -154,15 +132,6 @@ class LoginView {
 			</form>
 		';
 	}
-
-	private function generateRegisterLinkHTML() {
-		if(isset($_GET['register']))
-		{
-			return '<a href=?>GO BACK!</a>';
-		}
-		else
-		return '<a href=?register>REGISTER NOW!</a>';
-	}
 	
 	/**
 	* Generate HTML code on the output buffer for the logout button
@@ -173,7 +142,6 @@ class LoginView {
 		return '
 			<form method="post" > 
 				<fieldset>
-					<p>'.$this->generateRegisterLinkHTML().'</p>
 					<legend>Login - enter Username and password</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
@@ -197,28 +165,6 @@ class LoginView {
 		//RETURN REQUEST VARIABLE: USERNAME
 	}
 
-	private function generateRegisterFormHTML($message) {
-		return '
-			<form method="post" > 
-				<fieldset>
-					<p>'.$this->generateRegisterLinkHTML().'</p>
-					<p id="' . self::$messageId . '">' . $message .'</p>
-					<legend>Register - enter Username and password</legend>
-					
-					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" /></br>
-
-					<label for="' . self::$password . '">Password :</label>
-					<input type="password" id="' . self::$password . '" name="' . self::$password . '" /></br>
-
-					<label for="' . self::$regRepeatPassword . '">Repeat Password :</label>
-					<input type="password" id="' . self::$regRepeatPassword . '" name="' . self::$regRepeatPassword . '" /></br>
-					
-					<input type="submit" name="' . self::$register . '" value="register" />
-				</fieldset>
-			</form>
-		';
-	}
 
 
 
