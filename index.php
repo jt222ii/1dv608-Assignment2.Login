@@ -12,19 +12,14 @@ require_once('model/LoginModel.php');
 ini_set('display_errors', 'On');*/
 
 //CREATE OBJECTS OF THE VIEWS
-//phpinfo();
-// $servername = "mysql8.000webhost.com";
-// $username = "a2268719_jt222ii";
-// $password = "jt222ii";
-// $dbname = "a2268719_reg";
-
-$servername = "localhost";
-$username = "jt222ii";
-$password = "jt222ii";
-$dbname = "member";
+// phpinfo();
+$mysql_host = "localhost";
+$mysql_user = "jt222ii";
+$mysql_password = "jt222ii";
+$mysql_database = "member";
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+$conn = mysqli_connect($mysql_host, $mysql_user, $mysql_password, $mysql_database);
 
 // Check connection
 if ($conn->connect_error) {
