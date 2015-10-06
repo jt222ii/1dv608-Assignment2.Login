@@ -1,12 +1,12 @@
 <?php
 
 class RegisterView {
-	private static $name = 'LoginView::UserName';
-	private static $password = 'LoginView::Password';
-	private static $messageId = 'LoginView::Message';
+	private static $name = 'RegisterView::UserName';
+	private static $password = 'RegisterView::Password';
+	private static $messageId = 'RegisterView::Message';
 
-	private static $register = 'LoginView::Register';
-	private static $regRepeatPassword = 'LoginView::RegisterRepeatPassword';
+	private static $register = 'RegisterView::Register';
+	private static $regRepeatPassword = 'RegisterView::PasswordRepeat';
 
 	private static $keepName = '';
 	
