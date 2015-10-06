@@ -18,10 +18,8 @@ class LoginModel {
 	public function attemptLogin($Uname, $Pword){
 
 		$user = User::get($Uname);
-		var_dump($user->comparePassword($Pword));
 		if($user->comparePassword($Pword))		
 		{			
-			var_dump("heeej");
  			$_SESSION['userLoggedIn'] = true;		
 		}
 	}
