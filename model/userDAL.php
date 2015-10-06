@@ -20,7 +20,6 @@ class userDAL {
 		if ($this->conn->connect_error) {
 		   die("Connection failed: " . $conn->connect_error);
 		} 
-		echo "Connected successfully";
 		return $this->conn;
 	}
 	public function closeConnection()
@@ -40,7 +39,6 @@ class userDAL {
 		if (!$result)
 		{
 			return false;
-			echo "Upptaget användarnamn";
 		}
 		return true;
 	}
@@ -53,12 +51,20 @@ class userDAL {
 
 		$data = $result->fetch_array(MYSQLI_ASSOC);
 
-		if (!$result)
-		{
-			echo "Användaren finns inte";
-		}
 		$this->closeConnection();
 		return isset($data) ? array("Username" => $data['Username'], "Password" => $data['Password']) : null;
+	}
+
+	public function userNameAlreadyExists($username)
+	{
+		$connection = $this->createConnection();
+		$sqlQuery = "SELECT Username, Password FROM member WHERE Username = '$username'";
+		$result = $connection->query($sqlQuery);
+		if($result->num_rows == 0)
+		{
+			return false;
+		}
+		return true;
 	}
 
 

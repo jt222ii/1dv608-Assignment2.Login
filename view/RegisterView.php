@@ -55,7 +55,7 @@ class RegisterView {
 		$this->message = '';
 		if($this->hasUserTriedToRegister())
 		{
-			if(!isset($_SESSION['successful']) || !$_SESSION['successful'])
+			if(isset($_SESSION['successful']) && !$_SESSION['successful'])
 			{
 				$this->message .= "User exists, pick another username.</br>";
 				unset($_SESSION['successful']);

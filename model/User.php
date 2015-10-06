@@ -14,6 +14,11 @@ class User{
 		$this->password = $dothehash ? $this->hash($password) : $password;
 	}
 
+	public function userNameAlreadyExists()
+	{
+		$result = self::$uDAL->userNameAlreadyExists($this->username);
+		return $result;
+	}
 	public function getUsername()
 	{
 		return $this->username;
