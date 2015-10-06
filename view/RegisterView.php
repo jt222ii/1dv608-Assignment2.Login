@@ -12,9 +12,11 @@ class RegisterView {
 	
 	private $message;
 
+	private $ValidateCredentials;
 
-	public function __construct(){
-		
+
+	public function __construct(ValidateCredentials $ValidateCredentials){
+		$this->ValidateCredentials = $ValidateCredentials;
 	}
 	public function response() {
 		$response = "";
@@ -55,16 +57,16 @@ class RegisterView {
 		$this->message = '';
 		if($this->hasUserTriedToRegister())
 		{
-			if(isset($_SESSION['successful']) && !$_SESSION['successful'])
+			if(isset($_SESSION['successful']) && !$_SESSION['successful']) // går nog lösas utan session TODO: asd
 			{
 				$this->message .= "User exists, pick another username.</br>";
 				unset($_SESSION['successful']);
 			}
-			if(mb_strlen($this->getInputUname())<3)
+			if(!$this->ValidateCredentials->isUserNameValid())
 			{
 				$this->message .= 'Username has too few characters, at least 3 characters.</br>';
 			}	
-			if(mb_strlen($this->getInputPword())<6)
+			if(!$this->ValidateCredentials->isPasswordValid())
 			{
 				$this->message .= 'Password has too few characters, at least 6 characters.</br>';
 			}	

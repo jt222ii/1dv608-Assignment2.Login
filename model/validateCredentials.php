@@ -1,21 +1,48 @@
 <?php
 
-class validateCredentials {
+class ValidateCredentials{
 
-		
-		public function validate($uname, $pword, $repeatpword){
-			if(mb_strlen($uname<3)
-			{
-				
-			}	
-			if(mb_strlen($pword)<6)
-			{
-				
-			}	
-			if($pword != $repeatpword)
-			{
-				
-			}
+	private $usernameValid;
+	private $passwordValid;
+
+	public function validateAll($username, $password)
+	{
+		$this->validateUsername($username);
+		$this->validatePassword($password);
+
+		if($this->isUserNameValid() && $this->isPasswordValid())
+		{
+			return true;
 		}
+		return false;
+	}
+	public function validateUsername($username)
+	{
+		if(mb_strlen($username)<3)
+		{
+			$this->usernameValid = false;
+		}	
+		else
+		$this->usernameValid = true;
+	}
+	public function validatePassword($password)
+	{
+		if(mb_strlen($password)<6)
+		{
+			$this->passwordValid = false;
+		}	
+		else
+		$this->passwordValid = true;
+	}
+
+	public function isUserNameValid()
+	{
+		return $this->usernameValid;
+	}
+
+	public function isPasswordValid()
+	{
+		return $this->passwordValid;
+	}
 
 }

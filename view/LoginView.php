@@ -18,7 +18,7 @@ class LoginView {
 
 	public function __construct(LoginModel $loginModel){
 		$this->LoginModel = $loginModel;
-		if(!isset($_SESSION['messageBool']))
+		if(!isset($_SESSION['messageBool'])) // detta vill jag få bort
 		{
 			$_SESSION['messageBool'] = true;
 		}	

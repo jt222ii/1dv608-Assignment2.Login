@@ -46,7 +46,7 @@ class userDAL {
 	public function getUserByUsername($username)
 	{
 		$connection = $this->createConnection();
-		$sqlQuery = "SELECT Username, Password FROM member WHERE Username = '$username'";
+		$sqlQuery = "SELECT Username, Password FROM member WHERE BINARY Username = '$username'"; //Binary för av någon anledning skulle det vara case sensitive enligt testfallen
 		$result = $connection->query($sqlQuery);
 
 		$data = $result->fetch_array(MYSQLI_ASSOC);
