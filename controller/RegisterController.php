@@ -1,20 +1,21 @@
 <?php
-
-
+require_once('model/User.php');
 class RegisterController {
 
 	private $RegisterView;
-	private $userDAL;
+	private $user;
 	private $result;
-	public function __construct(RegisterView $RegisterView, UserDAL $userDAL){
-		$this->RegisterView = $RegisterView;
-		$this->userDAL = $userDAL;
-	}
 
+	public function __construct(RegisterView $RegisterView){
+		$this->RegisterView = $RegisterView;
+		
+	}
 	//skicka in datan till modellen när man tröckt pö register
 	public function userPost(){
 		if($this->RegisterView->hasUserTriedToRegister() && $this->RegisterView->doesPasswordsMatch()){
-			$this->userDAL->addUserToDatabase($this->RegisterView->getInputUname(), $this->RegisterView->getInputPword());
+			$this->user = new User($this->RegisterView->getInputUname(), $this->RegisterView->getInputPword());
+			$this->result = $this->user->addToDatabase();
+			$_SESSION['successful'] = $this->result;
 		}	
 	}
 }

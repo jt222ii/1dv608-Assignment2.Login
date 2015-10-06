@@ -3,11 +3,9 @@
 class userDAL {
 
 	private $conn;
-	private $username;
-	private $password;
 	private $userDAL;
 	//ska tas bort o läggas i en ickepublik fil
-	private $saltfyfan = "mmsalt";
+
 
 	public function createConnection()
 	{
@@ -30,25 +28,37 @@ class userDAL {
 		mysqli_close($this->conn);
 	}
 
-	public function addUserToDatabase($username, $password)
+	public function addUserToDatabase(User $user)
 	{
+		$username = $user->getUsername();
+		$password = $user->getPassword();
 		$connection = $this->createConnection();
-		$this->username = $username;
-		$this->password = $this->hash($password);
-		$sqlQuery = "INSERT INTO `member`.`member` (`Username`, `Password`) VALUES ('$this->username', '$this->password')";
+		$sqlQuery = "INSERT INTO `member`.`member` (`Username`, `Password`) VALUES ('$username', '$password')";
 		$result = $connection->query($sqlQuery);
-		
+		$this->closeConnection();
+
 		if (!$result)
 		{
+			return false;
 			echo "Upptaget användarnamn";
 		}
-
-		$this->closeConnection();
+		return true;
 	}
 
 	public function getUserByUsername($username)
 	{
-		//$sqlQuery = "SELECT `member`.`member` (`Username`, `Password`) VALUES ('$this->username', '$this->password')";
+		$connection = $this->createConnection();
+		$sqlQuery = "SELECT Username, Password FROM member WHERE Username = '$username'";
+		$result = $connection->query($sqlQuery);
+
+		$data = $result->fetch_array(MYSQLI_ASSOC);
+
+		if (!$result)
+		{
+			echo "Användaren finns inte";
+		}
+		$this->closeConnection();
+		return isset($data) ? array("Username" => $data['Username'], "Password" => $data['Password']) : null;
 	}
 
 

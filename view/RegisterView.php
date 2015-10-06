@@ -11,10 +11,10 @@ class RegisterView {
 	private static $keepName = '';
 	
 	private $message;
-	private $userDAL;
 
-	public function __construct(UserDAL $userDAL){
-		$this->userDAL = $userDAL;
+
+	public function __construct(){
+		
 	}
 	public function response() {
 		$response = "";
@@ -55,7 +55,11 @@ class RegisterView {
 		$this->message = '';
 		if($this->hasUserTriedToRegister())
 		{
-			$this->message = "";
+			if(!isset($_SESSION['successful']) || !$_SESSION['successful'])
+			{
+				$this->message .= "User exists, pick another username.</br>";
+				unset($_SESSION['successful']);
+			}
 			if(mb_strlen($this->getInputUname())<3)
 			{
 				$this->message .= 'Username has too few characters, at least 3 characters.</br>';
@@ -99,6 +103,11 @@ class RegisterView {
 			return false;
 		}
 		return true;
+	}
+
+	public function setRegistrationStatus($status)
+	{
+		$this->successfulregistration = $status;
 	}
 
  }

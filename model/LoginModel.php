@@ -1,13 +1,11 @@
 <?php
-
+require_once('model/User.php');
 class LoginModel {
 
-	private static $correctUname = 'Admin';
-	private static $correctPword = 'Password';
-	private $unameInput;
-	private $pwordInput;
 
 	private $message;
+
+	private static $user;
 
 	public function __construct()
 	{
@@ -18,9 +16,9 @@ class LoginModel {
 	}
 
 	public function attemptLogin($Uname, $Pword){
-		$this->unameInput = trim($Uname);
-		$this->pwordInput = trim($Pword);
-		if($this->unameInput === self::$correctUname && $this->pwordInput === self::$correctPword)		
+
+		$user = User::get($Uname);
+		if($user->comparePassword($Pword))		
 		{			
  			$_SESSION['userLoggedIn'] = true;		
 		}
