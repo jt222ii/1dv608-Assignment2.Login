@@ -32,7 +32,8 @@ class userDAL {
 		$username = $user->getUsername();
 		$password = $user->getPassword();
 		$connection = $this->createConnection();
-		$sqlQuery = "INSERT INTO `member` (`Username`, `Password`) VALUES ('$username', '$password')";
+		$sqlQuery = "INSERT INTO `member`.`member` (`Username`, `Password`) VALUES ('$username', '$password')";
+		//$sqlQuery = "INSERT INTO `member` (`Username`, `Password`) VALUES ('$username', '$password')"; //använd denna för publika servern vet ej varför
 		$result = $connection->query($sqlQuery);
 		$this->closeConnection();
 
