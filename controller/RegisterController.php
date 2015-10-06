@@ -4,13 +4,17 @@
 class RegisterController {
 
 	private $RegisterView;
-	private $RegisterModel;
-	public function __construct(RegisterView $RegisterView, RegisterModel $RegisterModel){
+	private $userDAL;
+	private $result;
+	public function __construct(RegisterView $RegisterView, UserDAL $userDAL){
 		$this->RegisterView = $RegisterView;
-		$this->RegisterModel = $RegisterModel;
-		//$this->RegisterModel->addUserToDatabase("Scrotum", "ledare");
+		$this->userDAL = $userDAL;
 	}
 
 	//skicka in datan till modellen när man tröckt pö register
-
+	public function userPost(){
+		if($this->RegisterView->hasUserTriedToRegister() && $this->RegisterView->doesPasswordsMatch()){
+			$this->userDAL->addUserToDatabase($this->RegisterView->getInputUname(), $this->RegisterView->getInputPword());
+		}	
+	}
 }

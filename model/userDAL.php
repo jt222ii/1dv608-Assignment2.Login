@@ -3,6 +3,12 @@
 class userDAL {
 
 	private $conn;
+	private $username;
+	private $password;
+	private $userDAL;
+	//ska tas bort o läggas i en ickepublik fil
+	private $saltfyfan = "mmsalt";
+
 	public function createConnection()
 	{
 		$mysql_host = "localhost";
@@ -23,5 +29,27 @@ class userDAL {
 	{
 		mysqli_close($this->conn);
 	}
+
+	public function addUserToDatabase($username, $password)
+	{
+		$connection = $this->createConnection();
+		$this->username = $username;
+		$this->password = $this->hash($password);
+		$sqlQuery = "INSERT INTO `member`.`member` (`Username`, `Password`) VALUES ('$this->username', '$this->password')";
+		$result = $connection->query($sqlQuery);
+		
+		if (!$result)
+		{
+			echo "Upptaget användarnamn";
+		}
+
+		$this->closeConnection();
+	}
+
+	public function getUserByUsername($username)
+	{
+		//$sqlQuery = "SELECT `member`.`member` (`Username`, `Password`) VALUES ('$this->username', '$this->password')";
+	}
+
 
 }

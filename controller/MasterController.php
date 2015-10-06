@@ -7,7 +7,6 @@ require_once('view/RegisterView.php');
 require_once('controller/LoginController.php');
 require_once('controller/RegisterController.php');
 require_once('model/LoginModel.php');
-require_once('model/RegisterModel.php');
 require_once('model/userDAL.php');
 
 
@@ -29,9 +28,9 @@ class MasterController {
 		if(isset($_GET['register']))
 		{
 			$ud = new userDAL();
-			$rm = new RegisterModel($ud);
-			$v = new RegisterView($rm);
-			$rc = new RegisterController($v, $rm);
+			$v = new RegisterView($ud);
+			$rc = new RegisterController($v, $ud);
+			$rc->userPost();
 		}
 		else
 		{

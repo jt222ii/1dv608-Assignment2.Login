@@ -11,10 +11,10 @@ class RegisterView {
 	private static $keepName = '';
 	
 	private $message;
-	private $registerModel;
+	private $userDAL;
 
-	public function __construct(RegisterModel $registerModel){
-		$this->registerModel = $registerModel;
+	public function __construct(UserDAL $userDAL){
+		$this->userDAL = $userDAL;
 	}
 	public function response() {
 		$response = "";
@@ -64,7 +64,7 @@ class RegisterView {
 			{
 				$this->message .= 'Password has too few characters, at least 6 characters.</br>';
 			}	
-			if($this->getInputPword() != $this->getInputRepeatPword())
+			if(!$this->doesPasswordsMatch())
 			{
 				$this->message .= 'Passwords do not match.</br>';
 			}
@@ -91,5 +91,14 @@ class RegisterView {
 			return $_POST[self::$regRepeatPassword];
 		}
 	}	
+
+	public function doesPasswordsMatch()
+	{
+		if($this->getInputPword() != $this->getInputRepeatPword())
+		{
+			return false;
+		}
+		return true;
+	}
 
  }
