@@ -11,10 +11,10 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 4</h1>
+          ' . $this->generateRegisterLinkHTML($isLoggedIn) . '
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
           
           <div class="container">
-              ' . $this->generateRegisterLinkHTML($isLoggedIn) . '
               ' . $view->response() . '    
               ' . $dtv->show() . '
           </div>
@@ -37,10 +37,10 @@ class LayoutView {
     {
       if(isset($_GET['register']))
       {
-        return '<a href=?>GO BACK!</a>';
+        return '<a href=?>Back to login</a>';
       }
       else
-      return '<a href=?register>REGISTER NOW!</a>';
+      return '<a href=?register>Register a new user</a>';
     }
   }
 }

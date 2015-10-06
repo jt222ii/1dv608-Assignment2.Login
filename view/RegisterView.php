@@ -33,6 +33,7 @@ class RegisterView {
 
 	private function generateRegisterFormHTML($message) {
 		return '
+			<h2>Register new user</h2>
 			<form method="post" > 
 				<fieldset>
 					<p id="' . self::$messageId . '">' . $message .'</p>
