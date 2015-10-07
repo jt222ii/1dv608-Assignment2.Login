@@ -6,19 +6,19 @@ class User{
 	private $password;
 	private $saltfyfan = "mmsalt";
 
-	private static $uDAL;
+	//private static $uDAL;
 
-	public function __construct($username, $password, $dothehash = true)
+	public function __construct($username, $password, $dohash = true)
 	{
 		$this->username = $username;
-		$this->password = $dothehash ? $this->hash($password) : $password;
+		$this->password = $dohash ? $this->hash($password) : $password;
 	}
 
-	public function userNameAlreadyExists()
-	{
-		$result = self::$uDAL->userNameAlreadyExists($this->username);
-		return $result;
-	}
+	// public function userNameAlreadyExists()
+	// {
+	// 	$result = self::$uDAL->userNameAlreadyExists($this->username);
+	// 	return $result;
+	// }
 	public function getUsername()
 	{
 		return $this->username;
@@ -39,23 +39,9 @@ class User{
 		}
 		return false;
 	}
-	public function addToDatabase()
-	{
-		$result = self::$uDAL->addUserToDatabase($this);
-		return $result;
-	}
-	public static function initialize()
-	{
-		self::$uDAL = new userDAL();
-	}
-
-	public static function get($username)
-	{
-		$data = self::$uDAL->getUserByUsername($username);
-
-		$user = new User($data['Username'],$data['Password'],false);
-
-		return $user;
-	}
+	// public function addToDatabase()
+	// {
+	// 	$result = self::$uDAL->addUserToDatabase($this);
+	// 	return $result;
+	// }
 }
-User::initialize();

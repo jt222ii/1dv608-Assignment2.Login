@@ -7,7 +7,8 @@ require_once('view/RegisterView.php');
 require_once('controller/LoginController.php');
 require_once('controller/RegisterController.php');
 require_once('model/LoginModel.php');
-require_once('model/ValidateCredentials.php');
+require_once('model/validateCredentials.php');
+require_once('model/userDAL.php');
 
 
 
@@ -23,15 +24,16 @@ class MasterController {
 
 		$dtv = new DateTimeView();
 		$lv = new LayoutView();
-		$lm = new LoginModel();
+		$ud = new userDAL();
+		$lm = new LoginModel($ud);
 		if(isset($_GET['register']))
 		{
 			//$u = new User();
 			$validate = new ValidateCredentials();
 			$v = new RegisterView($validate);
-			$rc = new RegisterController($v, $validate);
+			$rc = new RegisterController($v, $ud);
 			$rc->userPost();
-			if(isset($_SESSION['successful']) && $_SESSION['successful'] == true)
+			if(isset($_SESSION['successfulRegistration']) && $_SESSION['successfulRegistration'] == true)
 			{
 				header("Location: ?");
 			}

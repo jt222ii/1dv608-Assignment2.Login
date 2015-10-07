@@ -53,7 +53,13 @@ class userDAL {
 		$data = $result->fetch_array(MYSQLI_ASSOC);
 
 		$this->closeConnection();
-		return isset($data) ? array("Username" => $data['Username'], "Password" => $data['Password']) : null;
+		//return isset($data) ? array("Username" => $data['Username'], "Password" => $data['Password']) : null;
+		if($data == null || !isset($data))
+		{
+			return null;
+		}
+		$user = new User($data['Username'],$data['Password'],false);
+		return $user;
 	}
 
 	public function userNameAlreadyExists($username)

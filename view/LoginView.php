@@ -40,10 +40,10 @@ class LoginView {
 
 	public function setMessage(){
 		$this->message = '';
-		if(isset($_SESSION['successful']) && $_SESSION['successful'] == true) 
+		if(isset($_SESSION['successfulRegistration']) && $_SESSION['successfulRegistration'] == true) 
 		{
 			$this->message = 'Registered new user.';
-			unset($_SESSION['successful']);
+			unset($_SESSION['successfulRegistration']);
 		}
 		if($this->hasUserTriedToLogin())
 		{

@@ -5,10 +5,12 @@ class LoginModel {
 
 	private $message;
 
-	private static $user;
+	private $userDAL;
+	private $user;
 
-	public function __construct()
+	public function __construct($userDAL)
 	{
+		$this->userDAL = $userDAL;
 		if(!isset($_SESSION['userLoggedIn']))
 		{
 			$_SESSION['userLoggedIn'] = false;
@@ -16,11 +18,13 @@ class LoginModel {
 	}
 
 	public function attemptLogin($Uname, $Pword){
-
-		$user = User::get($Uname);
-		if($user->comparePassword($Pword))		
-		{			
- 			$_SESSION['userLoggedIn'] = true;		
+		$this->user = $this->userDAL->getUserByUsername($Uname);
+		if(isset($this->user))
+		{
+			if($this->user->comparePassword($Pword))		
+			{			
+	 			$_SESSION['userLoggedIn'] = true;		
+			}
 		}
 	}
 	public function logout(){
