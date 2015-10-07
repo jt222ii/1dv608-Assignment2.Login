@@ -40,6 +40,11 @@ class LoginView {
 
 	public function setMessage(){
 		$this->message = '';
+		if(isset($_SESSION['successful']) && $_SESSION['successful'] == true) 
+		{
+			$this->message = 'Registered new user.';
+			unset($_SESSION['successful']);
+		}
 		if($this->hasUserTriedToLogin())
 		{
 			if($this->getInputUname() == '')
@@ -65,7 +70,7 @@ class LoginView {
 		{
 			$_SESSION['messageBool'] = true;
 			$this->message = 'Bye bye!';
-			session_destroy();
+			unset($_SESSION['messageBool']);
 		}
  	}		 	
 

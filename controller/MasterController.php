@@ -21,8 +21,6 @@ class MasterController {
 	// phpinfo();
 	public function startApp(){
 
-		
-		//$rm->addUserToDatabase("annatlosen", "Pitt");
 		$dtv = new DateTimeView();
 		$lv = new LayoutView();
 		$lm = new LoginModel();
@@ -33,12 +31,17 @@ class MasterController {
 			$v = new RegisterView($validate);
 			$rc = new RegisterController($v, $validate);
 			$rc->userPost();
+			if(isset($_SESSION['successful']) && $_SESSION['successful'] == true)
+			{
+				header("Location: ?");
+			}
 		}
 		else
 		{
 			$v = new LoginView($lm);
 			$lc = new LoginController($v, $lm);
 			$lc->userPost();
+			
 		}	
 		$lv->render($lm->isUserLoggedIn(), $v, $dtv);
 	}

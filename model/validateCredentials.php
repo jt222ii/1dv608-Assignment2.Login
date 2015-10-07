@@ -18,7 +18,7 @@ class ValidateCredentials{
 	}
 	public function validateUsername($username)
 	{
-		if(mb_strlen($username)<3)
+		if(mb_strlen($username)<3 || strip_tags($username) != $username)
 		{
 			$this->usernameValid = false;
 		}	

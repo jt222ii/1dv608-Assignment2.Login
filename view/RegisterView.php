@@ -1,5 +1,6 @@
 <?php
 
+
 class RegisterView {
 	private static $name = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
@@ -27,6 +28,7 @@ class RegisterView {
 	public function hasUserTriedToRegister(){
 		if(isset($_POST[self::$register]))
 		{
+			self::$keepName = $this->getInputUname();
 			return true;
 		}
 	}
@@ -40,13 +42,13 @@ class RegisterView {
 					<legend>Register - enter Username and password</legend>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" /></br>
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. self::$keepName .'"/>
 
 					<label for="' . self::$password . '">Password :</label>
-					<input type="password" id="' . self::$password . '" name="' . self::$password . '" /></br>
+					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
 
 					<label for="' . self::$regRepeatPassword . '">Repeat Password :</label>
-					<input type="password" id="' . self::$regRepeatPassword . '" name="' . self::$regRepeatPassword . '" /></br>
+					<input type="password" id="' . self::$regRepeatPassword . '" name="' . self::$regRepeatPassword . '" />
 					
 					<input type="submit" name="' . self::$register . '" value="register" />
 				</fieldset>
@@ -60,20 +62,26 @@ class RegisterView {
 		{
 			if(isset($_SESSION['successful']) && !$_SESSION['successful']) // går nog lösas utan session TODO: asd
 			{
-				$this->message .= "User exists, pick another username.</br>";
+				$this->message .= "User exists, pick another username.";
 				unset($_SESSION['successful']);
 			}
 			if(!$this->ValidateCredentials->isUserNameValid())
 			{
-				$this->message .= 'Username has too few characters, at least 3 characters.</br>';
+				if(strip_tags($this->getInputUname()) != $this->getInputUname())
+				{
+					$this->message .= 'Username contains invalid characters.';
+					self::$keepName = strip_tags($this->getInputUname());
+				}
+				else
+				$this->message .= 'Username has too few characters, at least 3 characters.';
 			}	
 			if(!$this->ValidateCredentials->isPasswordValid())
 			{
-				$this->message .= 'Password has too few characters, at least 6 characters.</br>';
+				$this->message .= 'Password has too few characters, at least 6 characters.';
 			}	
 			if(!$this->doesPasswordsMatch())
 			{
-				$this->message .= 'Passwords do not match.</br>';
+				$this->message .= 'Passwords do not match.';
 			}
 		}
  	}

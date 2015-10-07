@@ -32,7 +32,7 @@ class RegisterController {
 			else if($this->RegisterView->doesPasswordsMatch() && $this->passedValidation)
 			{
 				$result = $this->user->addToDatabase();
-				$_SESSION['successful'] = $result;
+				$_SESSION['successful'] = true;
 			}
 		}	
 	}
