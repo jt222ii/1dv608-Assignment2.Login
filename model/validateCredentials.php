@@ -18,7 +18,7 @@ class ValidateCredentials{
 	}
 	public function validateUsername($username)
 	{
-		if(mb_strlen($username)<3 || strip_tags($username) != $username)
+		if(mb_strlen($username)<3 || preg_match("/^[A-Za-z0-9]+$/", $username) == 0)
 		{
 			$this->usernameValid = false;
 		}	

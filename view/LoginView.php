@@ -120,6 +120,11 @@ class LoginView {
 		{
 			self::$keepName = $this->getInputUname();
 			$response .= $this->generateLoginFormHTML($this->message);
+		}	
+		if(isset($_SESSION['successfulRegistrationUsername']))
+		{
+			self::$keepName = $_SESSION['successfulRegistrationUsername'];
+			unset($_SESSION['successfulRegistrationUsername']);
 		}
 		return $response;
 	}

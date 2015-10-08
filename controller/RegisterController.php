@@ -25,6 +25,7 @@ class RegisterController {
 			{
 				$result = $this->uDAL->addUserToDatabase($this->user);
 				$_SESSION['successfulRegistration'] = $result;
+				$_SESSION['successfulRegistrationUsername'] = $this->RegisterView->getInputUname();
 			}
 		}	
 	}

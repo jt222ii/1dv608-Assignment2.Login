@@ -76,7 +76,7 @@ class RegisterView {
 			}
 			if(!$this->ValidateCredentials->isUserNameValid())
 			{
-				if(strip_tags($this->getInputUname()) != $this->getInputUname())
+				if(preg_match("/^[A-Za-z0-9]+$/", $this->getInputUname()) == 0)
 				{
 					$this->message .= 'Username contains invalid characters.<br />';
 					self::$keepName = strip_tags($this->getInputUname());
