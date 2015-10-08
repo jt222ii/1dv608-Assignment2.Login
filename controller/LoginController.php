@@ -14,13 +14,15 @@ class LoginController {
 	}
 
 	public function userPost(){
-		if($this->LoginView->hasUserTriedToLogin()){
-			//hämtar input och försöker logga in
+
+		if ($this->LoginView->userTriedToLogout() && $this->LoginModel->isUserLoggedIn())
+		{
+			$this->LoginView->setUserJustLoggedOut();
+			$this->LoginModel->logout();	
+		}
+		else if($this->LoginView->hasUserTriedToLogin() && !$this->LoginModel->isUserLoggedIn()){
+			$this->LoginView->setUserJustLoggedIn();
 			$this->LoginModel->attemptLogin($this->LoginView->getInputUname(), $this->LoginView->getInputPword());
 		}	
-		else if ($this->LoginView->userLogout())
-		{
-				$this->LoginModel->logout();	
-		}
 	}
 }

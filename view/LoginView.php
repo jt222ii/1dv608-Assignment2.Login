@@ -14,14 +14,13 @@ class LoginView {
 	private $message;
 	private $LoginModel;
 
+	private $userJustLoggedOut = false;
+	private $userJustLoggedIn = false;
+
 
 
 	public function __construct(LoginModel $loginModel){
 		$this->LoginModel = $loginModel;
-		if(!isset($_SESSION['messageBool'])) // detta vill jag få bort
-		{
-			$_SESSION['messageBool'] = true;
-		}	
 	}
 
 	public function hasUserTriedToLogin(){
@@ -36,6 +35,14 @@ class LoginView {
 		{
 			return true;
 		}
+	}
+	public function setUserJustLoggedOut()
+	{
+		$this->userJustLoggedOut = true;
+	}
+	public function setUserJustLoggedIn()
+	{
+		$this->userJustLoggedIn = true;
 	}
 
 	public function setMessage(){
@@ -59,22 +66,18 @@ class LoginView {
 			{
 				$this->message = 'Wrong name or password';
 			}
-			else if($this->LoginModel->isUserLoggedIn() && $_SESSION['messageBool'])
+			else if($this->LoginModel->isUserLoggedIn() && $this->userJustLoggedIn)
 			{
-				$_SESSION['messageBool'] = false;
 				$this->message = 'Welcome';
 			}
 		}
-
-		else if ($this->userLogout() && !$_SESSION['messageBool'])
+		else if ($this->userTriedToLogout() && $this->userJustLoggedOut)
 		{
-			$_SESSION['messageBool'] = true;
-			$this->message = 'Bye bye!';
-			unset($_SESSION['messageBool']);
+			$this->message = 'Bye bye!';	
 		}
  	}		 	
 
-	public function userLogout(){
+	public function userTriedToLogout(){
 		if(isset($_POST[self::$logout]))
 		{
 			return true;
@@ -118,14 +121,18 @@ class LoginView {
 		}
 		else
 		{
-			self::$keepName = $this->getInputUname();
+			if(isset($_SESSION['successfulRegistrationUsername']))
+			{
+				self::$keepName = $_SESSION['successfulRegistrationUsername'];
+				unset($_SESSION['successfulRegistrationUsername']);
+			}
+			else
+			{
+				self::$keepName = $this->getInputUname();
+			}
 			$response .= $this->generateLoginFormHTML($this->message);
 		}	
-		if(isset($_SESSION['successfulRegistrationUsername']))
-		{
-			self::$keepName = $_SESSION['successfulRegistrationUsername'];
-			unset($_SESSION['successfulRegistrationUsername']);
-		}
+
 		return $response;
 	}
 
@@ -169,14 +176,8 @@ class LoginView {
 			</form>
 		';
 	}
-	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 		//RETURN REQUEST VARIABLE: USERNAME
 	}
-
-
-
-
-	
 }
