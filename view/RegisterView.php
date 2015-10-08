@@ -75,14 +75,17 @@ class RegisterView {
 				unset($_SESSION['successfulRegistration']);
 			}
 			if(!$this->ValidateCredentials->isUserNameValid())
-			{
-				if(preg_match("/^[A-Za-z0-9]+$/", $this->getInputUname()) == 0)
+			{	
+				$inputUname = $this->getInputUname();
+				if(mb_strlen($inputUname)<3)
+				{
+					$this->message .= 'Username has too few characters, at least 3 characters.<br />';
+				}
+				if(preg_match("/^[A-Za-z0-9]+$/", $inputUname) == 0 && $inputUname != "")
 				{
 					$this->message .= 'Username contains invalid characters.<br />';
-					self::$keepName = strip_tags($this->getInputUname());
+					self::$keepName = strip_tags($inputUname);
 				}
-				else
-				$this->message .= 'Username has too few characters, at least 3 characters.<br />';
 			}	
 			if(!$this->ValidateCredentials->isPasswordValid())
 			{

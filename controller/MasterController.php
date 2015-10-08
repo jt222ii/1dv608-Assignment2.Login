@@ -35,7 +35,8 @@ class MasterController {
 			$rc->userPost();
 			if(isset($_SESSION['successfulRegistration']) && $_SESSION['successfulRegistration'] == true)
 			{
-				header("Location: ?");
+				$location = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+				header("Location:$location");
 			}
 		}
 		else
