@@ -1,7 +1,6 @@
 <?php
 
 class LoginController {
-//frågar model och skickar till view
 	private $Uname;
 	private $Pword;
 	private $LoginView;
@@ -14,7 +13,6 @@ class LoginController {
 	}
 
 	public function userPost(){
-
 		if ($this->LoginView->userTriedToLogout() && $this->LoginModel->isUserLoggedIn())
 		{
 			$this->LoginView->setUserJustLoggedOut();

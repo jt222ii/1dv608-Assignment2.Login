@@ -1,5 +1,5 @@
 <?php
-
+require_once('settings.php');
 class userDAL {
 
 	private $conn;
@@ -9,13 +9,8 @@ class userDAL {
 
 	public function createConnection()
 	{
-		$mysql_host = "localhost";
-		$mysql_user = "jt222ii";
-		$mysql_password = "jt222ii";
-		$mysql_database = "member";
-
 		// Create connection
-		$this->conn = mysqli_connect($mysql_host, $mysql_user, $mysql_password, $mysql_database);
+		$this->conn = mysqli_connect(Settings::$mysql_host, Settings::$mysql_user, Settings::$mysql_password, Settings::$mysql_database);
 		// Check connection
 		if ($this->conn->connect_error) {
 		   die("Connection failed: " . $conn->connect_error);
@@ -32,9 +27,9 @@ class userDAL {
 		$username = $user->getUsername();
 		$password = $user->getPassword();
 		$connection = $this->createConnection();
-		$sqlQuery = "INSERT INTO `member`.`member` (`Username`, `Password`) VALUES ('$username', '$password')";
-		//$sqlQuery = "INSERT INTO `member` (`Username`, `Password`) VALUES ('$username', '$password')"; //använd denna för publika servern vet ej varför
-		$result = $connection->query($sqlQuery);
+		$sqlQuery = "INSERT INTO $this->mysql_database.`member` (`Username`, `Password`) VALUES ('$username', '$password')"; //Fick ha variabeln för databasnamnet i sql-satsen 
+		$result = $connection->query($sqlQuery);																			//för att undvika problem om man döper databasen till samma namn som tabellen 
+
 		$this->closeConnection();
 
 		if (!$result)
@@ -47,13 +42,12 @@ class userDAL {
 	public function getUserByUsername($username)
 	{
 		$connection = $this->createConnection();
-		$sqlQuery = "SELECT Username, Password FROM member WHERE BINARY Username = '$username'"; //Binary för av någon anledning skulle det vara case sensitive enligt testfallen
+		$sqlQuery = "SELECT Username, Password FROM member WHERE BINARY Username = '$username'";
 		$result = $connection->query($sqlQuery);
 
 		$data = $result->fetch_array(MYSQLI_ASSOC);
 
 		$this->closeConnection();
-		//return isset($data) ? array("Username" => $data['Username'], "Password" => $data['Password']) : null;
 		if($data == null || !isset($data))
 		{
 			return null;
