@@ -13,7 +13,7 @@ Interface repository for 1DV608 assignment 2 and 4
     PRIMARY KEY (`Username`)
   ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-4 - Enter the hostname, databasename, username and password in Settings.php.
+4 - Enter the hostname, databasename, username and password in Settings.php. (Make sure that your user has full access to the database)
 
 5 - Run the application on your webserver 
 
