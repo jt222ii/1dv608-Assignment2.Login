@@ -1,6 +1,8 @@
 # Login_1DV608
 Interface repository for 1DV608 assignment 2 and 4
 
+0. Download the repository
+
 1. Create a new database.
 
 2. enter the following sql command to create the table:
