@@ -4,12 +4,11 @@ class ValidateCredentials{
 
 	private $usernameValid;
 	private $passwordValid;
-
+	//validates the username and password in one go and returns true if both are valid or false if any of them isn't.
 	public function validateAll($username, $password)
 	{
 		$this->validateUsername($username);
 		$this->validatePassword($password);
-
 		if($this->isUserNameValid() && $this->isPasswordValid())
 		{
 			return true;

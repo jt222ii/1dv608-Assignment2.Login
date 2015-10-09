@@ -127,7 +127,6 @@ class RegisterView {
 		}
 		return true;
 	}
-
 	public function setRegistrationStatus($status)
 	{
 		$this->successfulregistration = $status;

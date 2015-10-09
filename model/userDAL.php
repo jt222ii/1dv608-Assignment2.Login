@@ -4,8 +4,6 @@ class userDAL {
 
 	private $conn;
 	private $userDAL;
-	//ska tas bort o läggas i en ickepublik fil
-
 
 	public function createConnection()
 	{
@@ -27,26 +25,24 @@ class userDAL {
 		$username = $user->getUsername();
 		$password = $user->getPassword();
 		$connection = $this->createConnection();
-		$sqlQuery = "INSERT INTO $this->mysql_database.`member` (`Username`, `Password`) VALUES ('$username', '$password')"; //Fick ha variabeln för databasnamnet i sql-satsen 
-		$result = $connection->query($sqlQuery);																			//för att undvika problem om man döper databasen till samma namn som tabellen 
-
+		$mysql_database = Settings::$mysql_database;
+		$sqlQuery = "INSERT INTO $mysql_database.`member` (`Username`, `Password`) VALUES ('$username', '$password')";  
+		$result = $connection->query($sqlQuery);																	    
 		$this->closeConnection();
-
+		//if the query failed result will be false
 		if (!$result)
 		{
 			return false;
 		}
 		return true;
 	}
-
+	//get a user from the database using a username
 	public function getUserByUsername($username)
 	{
 		$connection = $this->createConnection();
 		$sqlQuery = "SELECT Username, Password FROM member WHERE BINARY Username = '$username'";
 		$result = $connection->query($sqlQuery);
-
 		$data = $result->fetch_array(MYSQLI_ASSOC);
-
 		$this->closeConnection();
 		if($data == null || !isset($data))
 		{
@@ -55,7 +51,7 @@ class userDAL {
 		$user = new User($data['Username'],$data['Password'],false);
 		return $user;
 	}
-
+	//Checks if a user with a specific username already exists
 	public function userNameAlreadyExists($username)
 	{
 		$connection = $this->createConnection();

@@ -5,19 +5,13 @@ class User{
 	private $username;
 	private $password;
 
-	//private static $uDAL;
-
 	public function __construct($username, $password, $dohash = true)
 	{
 		$this->username = $username;
+		//When getting an existing member we do not want to hash the password again.
+		//if the construct gets a false it wont hash the password. If it gets true or nothing it will hash the password.
 		$this->password = $dohash ? $this->hash($password) : $password;
 	}
-
-	// public function userNameAlreadyExists()
-	// {
-	// 	$result = self::$uDAL->userNameAlreadyExists($this->username);
-	// 	return $result;
-	// }
 	public function getUsername()
 	{
 		return $this->username;
@@ -38,9 +32,4 @@ class User{
 		}
 		return false;
 	}
-	// public function addToDatabase()
-	// {
-	// 	$result = self::$uDAL->addUserToDatabase($this);
-	// 	return $result;
-	// }
 }

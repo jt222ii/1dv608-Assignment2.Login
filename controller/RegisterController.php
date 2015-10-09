@@ -14,18 +14,18 @@ class RegisterController {
 		$this->RegisterView = $RegisterView;
 		$this->uDAL = $uDAL;
 	}
-	
+	//If user wants to register. Creates a new user object and checks if everything was valid. If it was -> adds the user to the database
 	public function userPost(){
-		$this->unameInput = $this->RegisterView->getInputUname();
-		$this->pwordInput = $this->RegisterView->getInputPword();
 
 		if($this->RegisterView->hasUserTriedToRegister()){
+			$this->unameInput = $this->RegisterView->getInputUname();
+			$this->pwordInput = $this->RegisterView->getInputPword();
 			$this->user = new User($this->unameInput, $this->pwordInput);
 			if($this->RegisterView->doesPasswordsMatch() && $this->RegisterView->wasValidInput())
 			{
 				$result = $this->uDAL->addUserToDatabase($this->user);
 				$_SESSION['successfulRegistration'] = $result;
-				$_SESSION['successfulRegistrationUsername'] = $this->RegisterView->getInputUname();
+				$_SESSION['successfulRegistrationUsername'] = $this->unameInput;
 			}
 		}	
 	}

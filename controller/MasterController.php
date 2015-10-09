@@ -22,7 +22,6 @@ class MasterController {
 		$lm = new LoginModel($ud);
 		if(isset($_GET['register']))
 		{
-			//$u = new User();
 			$validate = new ValidateCredentials();
 			$v = new RegisterView($validate);
 			$rc = new RegisterController($v, $ud);
@@ -41,7 +40,4 @@ class MasterController {
 		}	
 		$lv->render($lm->isUserLoggedIn(), $v, $dtv);
 	}
-	
-
-
 }
