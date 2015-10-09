@@ -4,6 +4,7 @@ Interface repository for 1DV608 assignment 2 and 4
 1. Create a new database.
 
 2. enter the following sql command to create the table:
+
 CREATE TABLE `member` (
   `Username` varchar(40) CHARACTER SET utf8 COLLATE utf8_swedish_ci NOT NULL,
   `Password` varchar(40) CHARACTER SET utf8 COLLATE utf8_swedish_ci NOT NULL,
