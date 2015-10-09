@@ -1,5 +1,5 @@
 <?php
-require_once('settings.php');
+
 class userDAL {
 
 	private $conn;

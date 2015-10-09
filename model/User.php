@@ -4,7 +4,6 @@ class User{
 
 	private $username;
 	private $password;
-	private $saltfyfan = "mmsalt";
 
 	//private static $uDAL;
 
@@ -29,7 +28,7 @@ class User{
 	}
 	public function hash($password)
 	{
-		return sha1($this->saltfyfan.$password.$this->username);
+		return sha1(Settings::$salt.$password.$this->username);
 	}
 	public function comparePassword($password)
 	{
