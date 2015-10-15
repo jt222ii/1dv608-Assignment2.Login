@@ -3,7 +3,6 @@
 class userDAL {
 
 	private $conn;
-	private $userDAL;
 
 	public function createConnection()
 	{
